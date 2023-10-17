@@ -16,6 +16,15 @@ from .openfood_log import *
 BATCHRPC = ""
 KV1RPC = ""
 
+def connect_generic_node(rpcnode, rpcport, rpcuser, rpcpassword):
+    global BATCHRPC
+    print("Connecting to: " + rpcnode + ":" + rpcport)
+    try:
+        BATCHRPC = Proxy("http://" + rpcuser + ":" + rpcpassword + "@" + rpcnode + ":" + rpcport)
+        return True
+    except Exception as e:
+        sentry_sdk.capture_message(str(e), 'warning')
+
 
 def connect_batch_node():
     global BATCHRPC
